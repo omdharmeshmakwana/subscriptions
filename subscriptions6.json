@@ -1,0 +1,546 @@
+{
+  "audit_metadata": {
+    "audit_date": "2026-10-26",
+    "source": "Connected Gmail connector",
+    "accounts_audited": [
+      "subscriptions.6@faiblemedia.com"
+    ],
+    "date_range_covered": {
+      "start": "2026-04-30",
+      "end": "2026-10-25"
+    },
+    "audit_status": "partial",
+    "limitations": [
+      "Only one Gmail account was accessible: subscriptions.6@faiblemedia.com. Other company mailboxes (e.g. subscriptions.1@) were not audited.",
+      "The mailbox appears to be new: the earliest message is dated 2026-04-30, so any earlier billing history is not covered.",
+      "The Gmail connector cannot download attachment contents; the three PDF invoices (Apr-Jun) were not opened. Tax, subtotal, billing period and payment method are unknown for all transactions.",
+      "Hosted Stripe invoice links in the Aug-Oct invoice emails could not be fetched.",
+      "Transaction dates are invoice email dates in UTC, not payment timestamps.",
+      "Pinterest emails (about half the mailbox) were excluded by sender from the line-by-line review; a keyword search for billing terms in Pinterest mail returned nothing.",
+      "Billing interval is inferred from invoice cadence; no July 2026 invoice was found.",
+      "Only vendors with payment evidence are counted as subscriptions; vendors with account or marketing emails only are listed as unverified items."
+    ],
+    "summary": {
+      "unique_vendors": 1,
+      "unique_subscriptions": 1,
+      "confirmed_successful_transactions": 6,
+      "failed_payment_attempts": 0,
+      "refunds": 0,
+      "unverified_vendor_candidates": 10,
+      "unverified_items": 15,
+      "total_confirmed_spend_by_currency": {
+        "INR": 138060.0
+      },
+      "net_confirmed_spend_by_currency": {
+        "INR": 138060.0
+      }
+    }
+  },
+  "subscriptions": [
+    {
+      "subscription_id": "SUB-001",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "product_name": "Magnific Pro",
+      "vendor_website": "https://www.magnific.com",
+      "category": "AI creative tools (image/video/audio generation)",
+      "plan_name": "Pro (300,000 AI credits/month per welcome email; 'Unlimited' usage notices also received)",
+      "account_email": "subscriptions.6@faiblemedia.com",
+      "subscription_status": "active_until_period_end_renewal_cancelled",
+      "first_detected_date": "2026-04-30",
+      "first_payment_date": "2026-04-30",
+      "last_payment_date": "2026-10-08",
+      "subscription_start_date": "2026-04-30",
+      "next_renewal_date": null,
+      "cancellation_date": "2026-10-23",
+      "billing_frequency": "monthly (inferred from invoice cadence; not stated in emails)",
+      "current_plan_price": null,
+      "currency": "INR",
+      "total_confirmed_payments": 138060.0,
+      "total_successful_spend": 138060.0,
+      "total_refunds": 0.0,
+      "net_confirmed_spend": 138060.0,
+      "total_failed_payment_amount": 0.0,
+      "transaction_count": 6,
+      "invoice_count": 6,
+      "evidence_confidence": "medium",
+      "verification_notes": "Cancellation notice dated 2026-10-23 says the subscription ends '11-08-2026' (ambiguous format; most consistent with 2026-11-08 given the 8th-of-month billing). Access continues until then and no further renewal is expected. Latest invoice was INR 23,010 but list price is not stated, so current_plan_price is null. No invoice found for July 2026 and billing day moved from the 30th to the 8th after June; see unverified items. total_confirmed_payments and total_successful_spend both hold gross successful payments."
+    }
+  ],
+  "transactions": [
+    {
+      "transaction_id": "TXN-001",
+      "subscription_id": "SUB-001",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "product_name": "Magnific Pro",
+      "account_email": "subscriptions.6@faiblemedia.com",
+      "transaction_date": "2026-04-30",
+      "transaction_type": "subscription_payment",
+      "transaction_status": "paid",
+      "amount": 23010.0,
+      "currency": "INR",
+      "tax_amount": null,
+      "subtotal": null,
+      "refund_amount": null,
+      "net_transaction_amount": 23010.0,
+      "invoice_number": "INV-C-2026-15185092",
+      "payment_reference": null,
+      "billing_period_start": null,
+      "billing_period_end": null,
+      "payment_method_description": null,
+      "email_subject": "Here is your invoice",
+      "email_sender": "info@magnific.com",
+      "gmail_message_id": "19ddd80331b00619",
+      "gmail_message_link": "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1863883329031374361|msg-f:1863883329031374361",
+      "attachment_filename": "invoice_INV-C-2026-15185092.pdf",
+      "evidence_notes": "Email body states Invoiced amount and Status Paid. Invoice number taken from PDF attachment filename (PDF content not readable via connector). Transaction date = invoice email date (UTC); actual charge timestamp not shown."
+    },
+    {
+      "transaction_id": "TXN-002",
+      "subscription_id": "SUB-001",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "product_name": "Magnific Pro",
+      "account_email": "subscriptions.6@faiblemedia.com",
+      "transaction_date": "2026-05-30",
+      "transaction_type": "subscription_payment",
+      "transaction_status": "paid",
+      "amount": 23010.0,
+      "currency": "INR",
+      "tax_amount": null,
+      "subtotal": null,
+      "refund_amount": null,
+      "net_transaction_amount": 23010.0,
+      "invoice_number": "INV-C-2026-15714027",
+      "payment_reference": null,
+      "billing_period_start": null,
+      "billing_period_end": null,
+      "payment_method_description": null,
+      "email_subject": "Here is your invoice",
+      "email_sender": "info@magnific.com",
+      "gmail_message_id": "19e77ff0691ba4ce",
+      "gmail_message_link": "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1866601241100657870|msg-f:1866601241100657870",
+      "attachment_filename": "invoice_INV-C-2026-15714027.pdf",
+      "evidence_notes": "Email body states Invoiced amount and Status Paid. Invoice number taken from PDF attachment filename (PDF content not readable via connector). Transaction date = invoice email date (UTC); actual charge timestamp not shown."
+    },
+    {
+      "transaction_id": "TXN-003",
+      "subscription_id": "SUB-001",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "product_name": "Magnific Pro",
+      "account_email": "subscriptions.6@faiblemedia.com",
+      "transaction_date": "2026-06-30",
+      "transaction_type": "subscription_payment",
+      "transaction_status": "paid",
+      "amount": 23010.0,
+      "currency": "INR",
+      "tax_amount": null,
+      "subtotal": null,
+      "refund_amount": null,
+      "net_transaction_amount": 23010.0,
+      "invoice_number": "INV-C-2026-16226993",
+      "payment_reference": null,
+      "billing_period_start": null,
+      "billing_period_end": null,
+      "payment_method_description": null,
+      "email_subject": "Here is your invoice",
+      "email_sender": "info@magnific.com",
+      "gmail_message_id": "19f17a4261094b38",
+      "gmail_message_link": "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1869409745849895736|msg-f:1869409745849895736",
+      "attachment_filename": "invoice_INV-C-2026-16226993.pdf",
+      "evidence_notes": "Email body states Invoiced amount and Status Paid. Invoice number taken from PDF attachment filename (PDF content not readable via connector). Transaction date = invoice email date (UTC); actual charge timestamp not shown."
+    },
+    {
+      "transaction_id": "TXN-004",
+      "subscription_id": "SUB-001",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "product_name": "Magnific Pro",
+      "account_email": "subscriptions.6@faiblemedia.com",
+      "transaction_date": "2026-08-08",
+      "transaction_type": "subscription_payment",
+      "transaction_status": "paid",
+      "amount": 23010.0,
+      "currency": "INR",
+      "tax_amount": null,
+      "subtotal": null,
+      "refund_amount": null,
+      "net_transaction_amount": 23010.0,
+      "invoice_number": null,
+      "payment_reference": null,
+      "billing_period_start": null,
+      "billing_period_end": null,
+      "payment_method_description": null,
+      "email_subject": "Here is your invoice",
+      "email_sender": "info@mail.magnific.com",
+      "gmail_message_id": "19fe1c77dbb8694b",
+      "gmail_message_link": "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1872965796145686859|msg-f:1872965796145686859",
+      "attachment_filename": null,
+      "evidence_notes": "Email body states Invoiced amount INR 23010.00, Amount due INR 23010.00, Status paid. Hosted Stripe invoice link present but could not be opened; invoice number, tax and period not verified. Transaction date = invoice email date (UTC); actual charge timestamp not shown."
+    },
+    {
+      "transaction_id": "TXN-005",
+      "subscription_id": "SUB-001",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "product_name": "Magnific Pro",
+      "account_email": "subscriptions.6@faiblemedia.com",
+      "transaction_date": "2026-09-08",
+      "transaction_type": "subscription_payment",
+      "transaction_status": "paid",
+      "amount": 23010.0,
+      "currency": "INR",
+      "tax_amount": null,
+      "subtotal": null,
+      "refund_amount": null,
+      "net_transaction_amount": 23010.0,
+      "invoice_number": null,
+      "payment_reference": null,
+      "billing_period_start": null,
+      "billing_period_end": null,
+      "payment_method_description": null,
+      "email_subject": "Here is your invoice",
+      "email_sender": "info@mail.magnific.com",
+      "gmail_message_id": "1a0816e6a63079bf",
+      "gmail_message_link": "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1875774424686295487|msg-f:1875774424686295487",
+      "attachment_filename": null,
+      "evidence_notes": "Email body states Invoiced amount INR 23010.00, Amount due INR 23010.00, Status paid. Hosted Stripe invoice link present but could not be opened; invoice number, tax and period not verified. Transaction date = invoice email date (UTC); actual charge timestamp not shown."
+    },
+    {
+      "transaction_id": "TXN-006",
+      "subscription_id": "SUB-001",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "product_name": "Magnific Pro",
+      "account_email": "subscriptions.6@faiblemedia.com",
+      "transaction_date": "2026-10-08",
+      "transaction_type": "subscription_payment",
+      "transaction_status": "paid",
+      "amount": 23010.0,
+      "currency": "INR",
+      "tax_amount": null,
+      "subtotal": null,
+      "refund_amount": null,
+      "net_transaction_amount": 23010.0,
+      "invoice_number": null,
+      "payment_reference": null,
+      "billing_period_start": null,
+      "billing_period_end": null,
+      "payment_method_description": null,
+      "email_subject": "Here is your invoice",
+      "email_sender": "info@mail.magnific.com",
+      "gmail_message_id": "1a11bed880edbd0a",
+      "gmail_message_link": "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1878492356675484938|msg-f:1878492356675484938",
+      "attachment_filename": null,
+      "evidence_notes": "Email body states Invoiced amount INR 23010.00, Amount due INR 23010.00, Status paid. Hosted Stripe invoice link present but could not be opened; invoice number, tax and period not verified. Transaction date = invoice email date (UTC); actual charge timestamp not shown."
+    }
+  ],
+  "monthly_spending": [
+    {
+      "month": "2026-04",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "currency": "INR",
+      "confirmed_spend": 23010.0,
+      "refunds": 0.0,
+      "net_spend": 23010.0,
+      "transaction_count": 1,
+      "notes": null
+    },
+    {
+      "month": "2026-05",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "currency": "INR",
+      "confirmed_spend": 23010.0,
+      "refunds": 0.0,
+      "net_spend": 23010.0,
+      "transaction_count": 1,
+      "notes": null
+    },
+    {
+      "month": "2026-06",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "currency": "INR",
+      "confirmed_spend": 23010.0,
+      "refunds": 0.0,
+      "net_spend": 23010.0,
+      "transaction_count": 1,
+      "notes": null
+    },
+    {
+      "month": "2026-07",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "currency": "INR",
+      "confirmed_spend": 0,
+      "refunds": 0.0,
+      "net_spend": 0,
+      "transaction_count": 0,
+      "notes": "No invoice found for this month"
+    },
+    {
+      "month": "2026-08",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "currency": "INR",
+      "confirmed_spend": 23010.0,
+      "refunds": 0.0,
+      "net_spend": 23010.0,
+      "transaction_count": 1,
+      "notes": null
+    },
+    {
+      "month": "2026-09",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "currency": "INR",
+      "confirmed_spend": 23010.0,
+      "refunds": 0.0,
+      "net_spend": 23010.0,
+      "transaction_count": 1,
+      "notes": null
+    },
+    {
+      "month": "2026-10",
+      "vendor_name": "Magnific (Freepik Company S.L.U. / Magnific AI S.L.U.)",
+      "currency": "INR",
+      "confirmed_spend": 23010.0,
+      "refunds": 0.0,
+      "net_spend": 23010.0,
+      "transaction_count": 1,
+      "notes": null
+    }
+  ],
+  "unverified_items": [
+    {
+      "item_id": "UV-001",
+      "vendor_or_item": "Magnific Pro",
+      "issue_type": "Missing invoice / cadence change",
+      "description": "Invoices exist on 30 Apr, 30 May, 30 Jun, then next on 8 Aug (39 days later), 8 Sep and 8 Oct. No July 2026 invoice or failed-payment email was found. Either a payment email is missing from this mailbox or billing was re-anchored (e.g. plan change, lapse and resubscription).",
+      "related_gmail_message_ids": [
+        "19f17a4261094b38",
+        "19fe1c77dbb8694b"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1869409745849895736|msg-f:1869409745849895736",
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1872965796145686859|msg-f:1872965796145686859"
+      ],
+      "first_seen": "2026-06-30",
+      "last_seen": "2026-08-08",
+      "suggested_action": "Check Magnific billing history / Stripe invoices for July 2026 and the reason for the date change."
+    },
+    {
+      "item_id": "UV-002",
+      "vendor_or_item": "Magnific Pro",
+      "issue_type": "Ambiguous end date",
+      "description": "Cancellation notice (2026-10-23) says subscription will end on '11-08-2026'. Read as MM-DD-YYYY this is 2026-11-08 (matches the 8th-of-month cycle); read as DD-MM-YYYY it would be 2026-08-11 (already past), so the first reading is assumed.",
+      "related_gmail_message_ids": [
+        "1a167dfb7d9faf96"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1879828413571641238|msg-f:1879828413571641238"
+      ],
+      "first_seen": "2026-10-23",
+      "last_seen": "2026-10-23",
+      "suggested_action": "Confirm end date in the Magnific 'My subscriptions' page."
+    },
+    {
+      "item_id": "UV-003",
+      "vendor_or_item": "Magnific Pro",
+      "issue_type": "Missing invoice detail",
+      "description": "Invoice PDFs (Apr-Jun) cannot be downloaded through the Gmail connector, and the hosted Stripe invoice links (Aug-Oct) could not be opened. Subtotal, tax, billing period, payment method and invoice numbers for Aug-Oct are unknown; Apr-Jun invoice numbers come from attachment filenames only.",
+      "related_gmail_message_ids": [
+        "19ddd80331b00619",
+        "19e77ff0691ba4ce",
+        "19f17a4261094b38",
+        "19fe1c77dbb8694b"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1863883329031374361|msg-f:1863883329031374361",
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1866601241100657870|msg-f:1866601241100657870",
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1869409745849895736|msg-f:1869409745849895736",
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1872965796145686859|msg-f:1872965796145686859"
+      ],
+      "first_seen": "2026-04-30",
+      "last_seen": "2026-10-08",
+      "suggested_action": "Open the invoice PDFs / Stripe links manually and fill tax, period and payment method."
+    },
+    {
+      "item_id": "UV-004",
+      "vendor_or_item": "Magnific Pro",
+      "issue_type": "Plan price / billing interval unconfirmed",
+      "description": "Emails give only the invoiced amount (INR 23,010). The plan list price and billing interval are not stated; the 'Pro' name and 300,000 credits/month appear in the 30 Apr welcome email.",
+      "related_gmail_message_ids": [
+        "19ddd807f9bd7638"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1863883349567567416|msg-f:1863883349567567416"
+      ],
+      "first_seen": "2026-04-30",
+      "last_seen": "2026-10-23",
+      "suggested_action": "Confirm the Pro price and interval on the Magnific account page."
+    },
+    {
+      "item_id": "UV-005",
+      "vendor_or_item": "Google Workspace",
+      "issue_type": "Possible subscription, no billing evidence",
+      "description": "Workspace marketing and 'you already have these premium features' emails indicate the faiblemedia.com domain is on a Workspace plan. No invoices or receipts are in this mailbox (billing usually goes to the admin account).",
+      "related_gmail_message_ids": [
+        "19e279ed5c9c73bb"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1865187256052773819|msg-f:1865187256052773819"
+      ],
+      "first_seen": "2026-04-30",
+      "last_seen": "2026-10-07",
+      "suggested_action": "Check the Workspace admin billing page or admin mailbox."
+    },
+    {
+      "item_id": "UV-006",
+      "vendor_or_item": "OpenAI / ChatGPT",
+      "issue_type": "Account exists, no billing evidence",
+      "description": "Sign-in alerts (Jul 11, Sep 22) and product emails, including an upsell-style 'More access to advanced tools' message. No receipt or subscription confirmation found, so the plan tier is unknown.",
+      "related_gmail_message_ids": [
+        "1a0c7d3a40ba7269",
+        "19fcbac2000fa2bf"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1877012833854190185|msg-f:1877012833854190185",
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1872576887466730175|msg-f:1872576887466730175"
+      ],
+      "first_seen": "2026-07-11",
+      "last_seen": "2026-10-25",
+      "suggested_action": "Check ChatGPT account billing settings."
+    },
+    {
+      "item_id": "UV-007",
+      "vendor_or_item": "Higgsfield AI",
+      "issue_type": "Account exists, no billing evidence",
+      "description": "New-device sign-in alerts (May-Oct) and a Terms/Privacy update. No invoice, receipt or subscription email found.",
+      "related_gmail_message_ids": [
+        "1a163ae7889765b9",
+        "19fa6f94a3a897c2"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1879754660577240505|msg-f:1879754660577240505",
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1871931279317440450|msg-f:1871931279317440450"
+      ],
+      "first_seen": "2026-05-22",
+      "last_seen": "2026-10-22",
+      "suggested_action": "Check Higgsfield account billing; payments may go to another email."
+    },
+    {
+      "item_id": "UV-008",
+      "vendor_or_item": "Dropbox",
+      "issue_type": "Free-tier account",
+      "description": "Welcome email on 2026-06-02 says a Dropbox Basic plan was started (Basic is normally the free tier). No charge evidence.",
+      "related_gmail_message_ids": [
+        "19e87e0c0b000597"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1866880635734328727|msg-f:1866880635734328727"
+      ],
+      "first_seen": "2026-06-02",
+      "last_seen": "2026-06-21",
+      "suggested_action": "None unless a paid plan is expected."
+    },
+    {
+      "item_id": "UV-009",
+      "vendor_or_item": "Sync Labs (Sync)",
+      "issue_type": "Account / upsell only",
+      "description": "Welcome email 2026-10-22 followed by onboarding and 'upgrade' marketing emails. No payment evidence.",
+      "related_gmail_message_ids": [
+        "1a163c8857fc019a"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1879756450763112858|msg-f:1879756450763112858"
+      ],
+      "first_seen": "2026-10-22",
+      "last_seen": "2026-10-25",
+      "suggested_action": "None unless a paid plan is expected."
+    },
+    {
+      "item_id": "UV-010",
+      "vendor_or_item": "SJinn",
+      "issue_type": "Abandoned checkout",
+      "description": "Two 'complete your subscription checkout' reminders (2026-05-18, 2026-10-22). A checkout was started but no payment or confirmation was found.",
+      "related_gmail_message_ids": [
+        "19e3c3c2fee5abf0",
+        "1a16420a2ed3ec40"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1865549912929053680|msg-f:1865549912929053680",
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1879762505976507456|msg-f:1879762505976507456"
+      ],
+      "first_seen": "2026-05-18",
+      "last_seen": "2026-10-22",
+      "suggested_action": "None unless a payment appears on card statements."
+    },
+    {
+      "item_id": "UV-011",
+      "vendor_or_item": "Envato",
+      "issue_type": "Account created, no billing evidence",
+      "description": "Welcome email and Google account connection on 2026-10-22 plus promotions. No subscription or receipt.",
+      "related_gmail_message_ids": [
+        "1a163c2397eae7bc"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1879756018044037052|msg-f:1879756018044037052"
+      ],
+      "first_seen": "2026-10-22",
+      "last_seen": "2026-10-25",
+      "suggested_action": "None unless a paid plan is expected."
+    },
+    {
+      "item_id": "UV-012",
+      "vendor_or_item": "HeyGen",
+      "issue_type": "Marketing only",
+      "description": "Onboarding-style marketing emails ('Make your avatar more like you'); no billing evidence.",
+      "related_gmail_message_ids": [
+        "1a170770174a33db"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1879979547458941915|msg-f:1879979547458941915"
+      ],
+      "first_seen": "2026-10-22",
+      "last_seen": "2026-10-25",
+      "suggested_action": "None unless a paid plan is expected."
+    },
+    {
+      "item_id": "UV-013",
+      "vendor_or_item": "Figma",
+      "issue_type": "Access request only",
+      "description": "File view request from account subscriptions.1@faiblemedia.com on 2026-10-01. Indicates Figma use, not a subscription for this mailbox.",
+      "related_gmail_message_ids": [
+        "1a0f686249c19a7d"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1877834340990294653|msg-f:1877834340990294653"
+      ],
+      "first_seen": "2026-10-01",
+      "last_seen": "2026-10-01",
+      "suggested_action": "Review Figma billing under the subscriptions.1 account."
+    },
+    {
+      "item_id": "UV-014",
+      "vendor_or_item": "Anthropic",
+      "issue_type": "Policy notice only",
+      "description": "Privacy Policy update notice on 2026-06-26. No invoice or subscription email.",
+      "related_gmail_message_ids": [
+        "19f04fcdf98decc2"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1869081591432473794|msg-f:1869081591432473794"
+      ],
+      "first_seen": "2026-06-26",
+      "last_seen": "2026-06-26",
+      "suggested_action": "Check Anthropic billing if a paid plan is expected."
+    },
+    {
+      "item_id": "UV-015",
+      "vendor_or_item": "Other company mailboxes",
+      "issue_type": "Scope limitation",
+      "description": "The Figma email references subscriptions.1@faiblemedia.com, so other company mailboxes exist. Only subscriptions.6@faiblemedia.com was accessible, and its history starts on 2026-04-30 (new inbox).",
+      "related_gmail_message_ids": [
+        "1a0f686249c19a7d"
+      ],
+      "related_message_links": [
+        "https://mail.google.com/mail/?authuser=subscriptions.6@faiblemedia.com#all/thread-f:1877834340990294653|msg-f:1877834340990294653"
+      ],
+      "first_seen": null,
+      "last_seen": null,
+      "suggested_action": "Run the same audit on the other mailboxes and on earlier history."
+    }
+  ]
+}
