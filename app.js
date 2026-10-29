@@ -13,6 +13,7 @@ const PAGE_SIZE = 8;
 
 let accounts = [];
 let audit = null;
+let liveBackend = false;
 let subscriptionPage = 1;
 let transactionPage = 1;
 let toastTimer;
@@ -39,7 +40,7 @@ function renderAccountDirectory() {
         <strong>${escapeHtml(displayName)}</strong><span class="account-email">${escapeHtml(data ? account.email : 'Connect an account to begin')}</span>
         <span class="account-card-bottom">${data ? `${number(summary.unique_subscriptions ?? data.subscriptions?.length)} subscriptions` : 'No account data yet'}<b>${data ? escapeHtml(amountList || 'No confirmed spend') : '—'}</b></span>
       </button>
-      <a class="connect-link" href="/auth/google?account=${account.accountNumber}">${account.connected ? 'Reconnect Gmail' : 'Connect Gmail'} ↗</a>
+      ${liveBackend ? `<a class="connect-link" href="/auth/google?account=${account.accountNumber}">${account.connected ? 'Reconnect Gmail' : 'Connect Gmail'} ↗</a>` : '<span class="connect-link static-note">Live Gmail sync needs a backend</span>'}
     </article>`;
   }).join('');
 }
@@ -93,10 +94,15 @@ function renderTransactions() {
     const localPdfs = (item.invoice_files || []).filter((file) => file.url);
     const attachmentLink = localPdfs.length
       ? localPdfs.map((file) => `<a class="attachment-link" href="${escapeHtml(file.url)}" target="_blank" rel="noopener" title="${escapeHtml(file.filename)}">▧ View PDF · ${escapeHtml(file.filename)}</a>`).join('')
+      : pdfNames.length && accountIsConnected(audit.accountNumber) ? `<a class="attachment-link" href="/api/invoices/import/${audit.accountNumber}/${encodeURIComponent(item.transaction_id)}" target="_blank" rel="noopener" title="Retrieve ${escapeHtml(pdfNames.join(' · '))}">▧ Retrieve ${pdfNames.length} PDF${pdfNames.length === 1 ? '' : 's'}</a>`
       : pdfNames.length && gmailLink ? `<a class="attachment-link" href="${escapeHtml(gmailLink)}" target="_blank" rel="noopener" title="${escapeHtml(pdfNames.join(' · '))}">▧ ${pdfNames.length} PDF${pdfNames.length === 1 ? '' : 's'} in email</a>` : '';
     return `<tr><td><div class="vendor-cell"><span class="vendor-mark">${escapeHtml(initials(cleanVendor(item.vendor_name)))}</span><span class="transaction-vendor"><span>${vendorLink}</span><span class="vendor-sub">${escapeHtml(item.product_name || item.subscription_id || '')}</span>${attachmentLink}</span></div></td><td>${dateLabel(item.transaction_date)}</td><td><span class="type-pill">${escapeHtml(titleCase(item.transaction_type || 'payment'))}</span></td><td><span class="status-pill ${escapeHtml(status)}">${escapeHtml(titleCase(status))}</span></td><td class="mono">${escapeHtml(item.payment_reference || item.transaction_id || '—')}</td><td class="align-right amount ${Number(amount) < 0 ? 'negative' : ''}">${money(amount, item.currency)}</td></tr>`;
   }).join('') : '<tr><td colspan="6" class="empty-state">No transactions match this search.</td></tr>';
   $('#transactionFooter').innerHTML = `<span>Showing ${items.length ? (transactionPage - 1) * PAGE_SIZE + 1 : 0}–${Math.min(transactionPage * PAGE_SIZE, items.length)} of ${items.length}</span><span class="pager"><button class="page-button" data-page="txn-prev" ${transactionPage <= 1 ? 'disabled' : ''}>‹</button><span>${transactionPage} / ${pages}</span><button class="page-button" data-page="txn-next" ${transactionPage >= pages ? 'disabled' : ''}>›</button></span>`;
+}
+
+function accountIsConnected(accountNumber) {
+  return Boolean(accounts.find((account) => account.accountNumber === accountNumber)?.connected);
 }
 
 function renderChart() {
@@ -137,9 +143,13 @@ function renderGlobalSearch() {
   results.innerHTML = globalMatches.length ? globalMatches.map(({ account, subscription }, index) => {
     const evidence = paymentEvidence(account.data, subscription);
     const status = statusSummary(subscription.subscription_status, evidence.length);
-    const emails = evidence.slice(0, 3).map((transaction) => transaction.gmail_message_link
-      ? `<a class="evidence-mail" href="${escapeHtml(transaction.gmail_message_link)}" target="_blank" rel="noopener"><span>✉</span><span>${escapeHtml(transaction.email_subject || `${titleCase(transaction.transaction_type || 'payment')} email`)}<small>${dateLabel(transaction.transaction_date)} · ${money(transaction.net_transaction_amount ?? transaction.amount, transaction.currency)}</small></span><span>↗</span></a>`
-      : `<div class="evidence-mail no-link"><span>✉</span><span>${escapeHtml(transaction.email_subject || `${titleCase(transaction.transaction_type || 'payment')} email`)}<small>${dateLabel(transaction.transaction_date)} · ${money(transaction.net_transaction_amount ?? transaction.amount, transaction.currency)}</small></span></div>`).join('');
+    const emails = evidence.slice(0, 3).map((transaction) => {
+      const pdfs = (transaction.invoice_files || []).filter((file) => file.url).map((file) => `<a class="evidence-pdf" href="${escapeHtml(file.url)}" target="_blank" rel="noopener">PDF · ${escapeHtml(file.filename)}</a>`).join('');
+      const mail = transaction.gmail_message_link
+        ? `<a class="evidence-mail" href="${escapeHtml(transaction.gmail_message_link)}" target="_blank" rel="noopener"><span>✉</span><span>${escapeHtml(transaction.email_subject || `${titleCase(transaction.transaction_type || 'payment')} email`)}<small>${dateLabel(transaction.transaction_date)} · ${money(transaction.net_transaction_amount ?? transaction.amount, transaction.currency)}</small></span><span>↗</span></a>`
+        : `<div class="evidence-mail no-link"><span>✉</span><span>${escapeHtml(transaction.email_subject || `${titleCase(transaction.transaction_type || 'payment')} email`)}<small>${dateLabel(transaction.transaction_date)} · ${money(transaction.net_transaction_amount ?? transaction.amount, transaction.currency)}</small></span></div>`;
+      return mail + pdfs;
+    }).join('');
     return `<article class="global-result-card"><button class="global-result" type="button" data-search-result="${index}"><span class="result-mark">${escapeHtml(initials(subscription.vendor_name))}</span><span class="result-main"><strong>${escapeHtml(subscription.vendor_name)}</strong><small>${escapeHtml(subscription.plan_name || subscription.product_name || 'Subscription')}</small></span><span class="result-account">Account ${account.accountNumber}<small>${escapeHtml(account.email)}</small></span><span class="result-spend">${money(subscription.net_confirmed_spend, subscription.currency)}</span></button><div class="result-evidence"><span class="evidence-status ${status.className}">${escapeHtml(status.label)}</span><span class="evidence-caption">${evidence.length ? `${evidence.length} paid email${evidence.length === 1 ? '' : 's'} found` : 'No confirmed paid email found'}</span>${emails || '<span class="evidence-none">No matching purchase email in this account file.</span>'}</div></article>`;
   }).join('') : '<div class="search-empty">No matching tools found in the loaded accounts.</div>';
   results.hidden = false;
@@ -229,25 +239,51 @@ function bindEvents() {
 
 async function init() {
   try {
-    const response = await fetch('/api/status', { cache: 'no-store' });
-    if (!response.ok) throw new Error('Dashboard server unavailable. Start it with npm start.');
-    const status = await response.json();
-    accounts = await Promise.all(status.accounts.map(async (account) => ({ ...account, data: account.hasData ? await fetchAccountData(account.accountNumber) : null }))).then((items) => items);
-    accounts = accounts.map((account) => ({ ...account, email: account.data?.audit_metadata?.accounts_audited?.[0] || account.email }));
+    try {
+      const response = await fetch('/api/status', { cache: 'no-store' });
+      if (!response.ok) throw new Error('API unavailable');
+      const status = await response.json();
+      liveBackend = true;
+      accounts = await Promise.all(status.accounts.map(async (account) => ({ ...account, data: account.hasData ? await fetchAccountData(account.accountNumber) : null })));
+      accounts = accounts.map((account) => ({ ...account, email: account.data?.audit_metadata?.accounts_audited?.[0] || account.email }));
+    } catch {
+      liveBackend = false;
+      accounts = await loadStaticAccounts();
+    }
+    $('#syncStatus').textContent = liveBackend ? 'Gmail sync server' : 'Static files · no live sync';
     renderAccountDirectory();
     const firstAvailable = accounts.find((account) => account.data);
-    if (!firstAvailable) throw new Error('No account data found. Connect a Gmail inbox to create live account records.');
+    if (!firstAvailable) throw new Error('No account JSON files were found. Make sure the subscription JSON files are included in the Vercel deployment.');
     selectAccount(firstAvailable.accountNumber);
     bindEvents();
-    setInterval(refreshLiveData, 12000);
+    if (liveBackend) setInterval(refreshLiveData, 12000);
     const gmailState = new URLSearchParams(location.search).get('gmail');
     if (gmailState === 'connected') showToast('Gmail connected. New billing mail will sync automatically.');
     if (gmailState === 'error') showToast('Gmail connection failed. Check OAuth setup and try again.');
     if (gmailState) history.replaceState({}, '', location.pathname);
   } catch (error) {
     console.error(error);
-    document.querySelector('.page-wrap').innerHTML = `<section class="load-error"><div class="error-mark">!</div><h1>Couldn’t load the account data</h1><p>${escapeHtml(error.message)} Open this page through a local web server so the browser can read JSON files.</p><code>python3 -m http.server 8000</code><p>Then visit <strong>http://localhost:8000</strong>.</p></section>`;
+    document.querySelector('.page-wrap').innerHTML = `<section class="load-error"><div class="error-mark">!</div><h1>Couldn’t load account data</h1><p>${escapeHtml(error.message)}</p></section>`;
   }
+}
+
+async function loadStaticAccounts() {
+  const results = await Promise.all(Array.from({ length: 9 }, async (_, index) => {
+    const accountNumber = index + 1;
+    const candidates = accountNumber === 1
+      ? ['./subscription1.json', './Subscriptions1.json', './subscriptions1.json']
+      : [`./subscriptions${accountNumber}.json`, `./subscription${accountNumber}.json`, `./Subscriptions${accountNumber}.json`];
+    for (const path of candidates) {
+      try {
+        const response = await fetch(path, { cache: 'no-store' });
+        if (!response.ok) continue;
+        const data = await response.json();
+        return { accountNumber, email: data.audit_metadata?.accounts_audited?.[0] || `Account ${accountNumber}`, connected: false, data };
+      } catch { /* Try the next known filename for this account. */ }
+    }
+    return { accountNumber, email: `Account ${accountNumber}`, connected: false, data: null };
+  }));
+  return results;
 }
 
 async function fetchAccountData(accountNumber) {
